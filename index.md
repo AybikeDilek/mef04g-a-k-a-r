@@ -9,4 +9,6 @@
 - Betül Parlar
 
 ### Project Links
-- [Project Propasal](A.K.A - R Term Project)
+- [Project Proposal](A.K.A---R-Term-Project.html)
+
+### Data
