@@ -9,8 +9,9 @@
 - [Betül Parlar](https://pjournal.github.io/mef04-parlarbetul/)
 
 ### Project Links
-- [Project Proposal](A.K.A---R-Term-Project.html)
+- [Project Proposal](Project-Proposal.html)
 
 ### Data
-- [Data Source](https://www.kaggle.com/hgultekin/hourly-power-production-of-turkey-20132020)
+- [Data](https://www.kaggle.com/hgultekin/hourly-power-production-of-turkey-20132020)
+- [Data Source](https://rapor.epias.com.tr/rapor/)
 
