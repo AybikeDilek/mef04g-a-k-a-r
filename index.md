@@ -12,7 +12,7 @@
 - [Project Proposal](Project-Proposal.html)
 
 ### Assignment Links
-- [ISBike Analysis](ISBike_R.R)
+- [ISBike Analysis](https://aybikedilek.shinyapps.io/ISBike_Project/)
 
 ### Data
 - [Data](https://www.kaggle.com/hgultekin/hourly-power-production-of-turkey-20132020)
