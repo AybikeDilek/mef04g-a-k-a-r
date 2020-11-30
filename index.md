@@ -10,6 +10,7 @@
 
 ### Project Links
 - [Project Proposal](Project-Proposal.html)
+- [Exploratory Data Analysis of Project]()
 
 ### Assignment Links
 - [ISBike Analysis](https://aybikedilek.shinyapps.io/ISBike_Project/)
