@@ -1573,47 +1573,43 @@ h3{
 </div>
 <div id="about-dataset" class="section level3">
 <h3>About Dataset</h3>
-<p>The data shows the power production of Turkey. Real time generation data consist of 17 columns with 2 categorical and 15 numerical variables. It is datetime-based data and each column shows the amount of energy production in MWh’s, that is earned from these resources. The data contains information between 1st of May, 2013 and 20th of July, 2020, for 24 hours. The data is collected from Turkish Energy Exchange.</p>
+<p>The data shows the traffic announcements of İstanbul that are collected from Transport Management Center operators between 2018 and 2020. Data was formed by two different files, one for 2018 - 2019, and the other one for 2020. Data consists 12 columns and 58422 observations. Data records the detailed information about the reported traffic incidents.</p>
+<p>The data is collected from <a href="https://data.ibb.gov.tr/dataset/ulasim-yonetim-merkezi-uym-tarafindan-sisteme-girilen-trafik-duyurulari">İBB Open Data Portal</a></p>
 <ul>
-<li><em>Date</em> (date,categorical) : Date interval of the dataset.</li>
-<li><em>Hour</em> (int,categorical) : Hour interval of the dataset.</li>
-<li><em>Natural Gas</em> (Float, continuous) : Energy gained from natural gas in MWh.</li>
-<li><em>Dammed Hydro</em> (Float, continuous) : Energy gained from dams via hydro in MWh.</li>
-<li><em>Lignite</em> (Float, continuous) : Energy gained from lignites in MWh.</li>
-<li><em>River</em> (Float, continuous) : Energy gained from rivers in MWh.</li>
-<li><em>Import Coal</em> (Float, continuous) : Energy gained from coals which are not produced inside of the country in MWh.</li>
-<li><em>Wind</em> (Float, continuous) : Energy gained from winds in MWh.</li>
-<li><em>Sun</em> (Float, continuous) : Energy gained from sun in MWh.</li>
-<li><em>Fuel Oil</em> (Float, continuous) : Energy gained from fuel oil in MWh.</li>
-<li><em>Geothermal</em> (Float, continuous) : Energy gained from geothermal activities in MWh.</li>
-<li><em>Asphaltite Coal</em> (Float, continuous) : Energy gained from asphaltite coal in MWh.</li>
-<li><em>Black Coal</em> (Float, continuous) : Energy gained from black coal in MWh.</li>
-<li><em>Biomass</em> (Float, continuous) : Energy gained from biomass in MWh.</li>
-<li><em>Naphtha</em> (Float, continuous) : Energy gained from naphtha in MWh.</li>
-<li><em>LNG</em> (Float, continuous) : Energy gained from liquefied natural gas in MWh.</li>
-<li><em>Import-export</em> (Float, continuous) : The balance of imported and exported energy in MWh.</li>
+<li><em>Announcement_ID</em> (int) : Unique index of records in the data.</li>
+<li><em>Announcement_Types</em> (str) : Identical genre of announcement.</li>
+<li><em>Announcement_Title</em> (str) : Caption of the announcement.</li>
+<li><em>Announcement_Text</em> (str) : Detailed information about announcement.</li>
+<li><em>Starting_Time</em> (datetime) : Initial date and hour of incident.</li>
+<li><em>Ending_Time</em> (datetime) : Completion date and hour of incident.</li>
+<li><em>Intervention_Time</em> (datetime) : Date and hour of incident when is under control.</li>
+<li><em>Accident_Situation</em> (str) : Intervention type to the announcement.</li>
+<li><em>Effected_Lanes</em> (int) : Number of lanes that are disrupted due to incident.</li>
+<li><em>Coordinates</em> (str) : Mapping information of incident.</li>
+<li><em>Location</em> (str) : Name of the incident area.</li>
+<li><em>Accident_Types</em> (str) : Type of the traffic accident.</li>
 </ul>
 </div>
 <div id="learning-outcomes" class="section level3">
 <h3>Learning Outcomes</h3>
 <p>At the end of the study the group A.K.A - R expect to observe;</p>
 <ul>
-<li>Turkey’s energy profile (renewable and nonrenewable energy production trends)</li>
-<li>Whether there is a relationship in the type of energy generation method on an hourly, daily, monthly or quarterly basis.</li>
-<li>Is there a relationship between the change in foreign currency and energy production method?</li>
-<li>Is there a relationship between the change in foreign currency and export-import amounts (MWh)?</li>
-<li>Whether the population growth has an effect on electricity generation, and if so, to determine whether it is equally divided among all production methods or one method is used more dominantly.</li>
+<li>Traffic announcement types and volume of the İstanbul city.</li>
+<li>Average magnitude of the announcement in terms of intervention time and effected lanes.</li>
+<li>The relationship between municipality election and the number of running projects/constructions and so forth.</li>
+<li>The effect of the pandemic on the accident notifications.</li>
+<li>The distribution of announcement types during holiday terms.</li>
 </ul>
 </div>
 <div id="planning" class="section level3">
 <h3>Planning</h3>
 <ul>
 <li>Creating a project roadmap to get a clear overview of the objectives.</li>
-<li>Adding external data sources like foreign currency and population.</li>
+<li>Adding external data sources for holiday events.</li>
 <li>Data Wrangling as preprocessing section.</li>
-<li>Checking outliers and summarising data to deciding which central tendency method will be used for analysis.</li>
+<li>Checking outliers and summarizing data before Exploratory Data Analysis.</li>
 <li>Exploratory Data Analysis with R packages such as “dplyr” and “lubridate”.</li>
-<li>Visualizing data with R packages such as “ggplot2”.</li>
+<li>Visualizing data with R packages such as “ggplot2” and “leaflet”.</li>
 <li>Preparing a final Html report.</li>
 <li>Final project presentation.</li>
 </ul>

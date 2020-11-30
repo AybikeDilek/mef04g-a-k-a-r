@@ -29,45 +29,41 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### About Dataset
 
-The data shows the power production of Turkey. Real time generation data consist of 17 columns with 2 categorical and 15 numerical variables. It is datetime-based data and each column shows the amount of energy production in MWh’s, that is earned from these resources. The data contains information between 1st of May, 2013 and 20th of July, 2020, for 24 hours. The data is collected from Turkish Energy Exchange.
+The data shows the traffic announcements of İstanbul that are collected from Transport Management Center operators between 2018 and 2020. Data was formed by two different files, one for 2018 - 2019, and the other one for 2020. Data consists 12 columns and 58422 observations. Data records the detailed information about the reported traffic incidents.
 
-- *Date* (date,categorical) : Date interval of the dataset.
-- *Hour* (int,categorical) : Hour interval of the dataset.
-- *Natural Gas* (Float, continuous) : Energy gained from natural gas in MWh.
-- *Dammed Hydro* (Float, continuous) : Energy gained from dams via hydro in MWh.
-- *Lignite* (Float, continuous) : Energy gained from lignites in MWh.
-- *River* (Float, continuous) : Energy gained from rivers in MWh.
-- *Import Coal* (Float, continuous) : Energy gained from coals which are not produced inside of the country in MWh.
-- *Wind* (Float, continuous) : Energy gained from winds in MWh.
-- *Sun* (Float, continuous) : Energy gained from sun in MWh.
-- *Fuel Oil* (Float, continuous) : Energy gained from fuel oil in MWh.
-- *Geothermal* (Float, continuous) : Energy gained from geothermal activities in MWh.
-- *Asphaltite Coal* (Float, continuous) : Energy gained from asphaltite coal in MWh.
-- *Black Coal* (Float, continuous) : Energy gained from black coal in MWh.
-- *Biomass* (Float, continuous) : Energy gained from biomass in MWh.
-- *Naphtha* (Float, continuous) : Energy gained from naphtha in MWh.
-- *LNG* (Float, continuous) : Energy gained from liquefied natural gas in MWh.
-- *Import-export* (Float, continuous) : The balance of imported and exported energy in MWh.
+The data is collected from [İBB Open Data Portal](https://data.ibb.gov.tr/dataset/ulasim-yonetim-merkezi-uym-tarafindan-sisteme-girilen-trafik-duyurulari)
+
+- *Announcement_ID* (int) : Unique index of records in the data.
+- *Announcement_Types* (str) : Identical genre of announcement. 
+- *Announcement_Title* (str) : Caption of the announcement.
+- *Announcement_Text* (str) : Detailed information about announcement.
+- *Starting_Time* (datetime) : Initial date and hour of incident.
+- *Ending_Time* (datetime) : Completion date and hour of incident.
+- *Intervention_Time* (datetime) : Date and hour of incident when is under control.
+- *Accident_Situation* (str) : Intervention type to the announcement.
+- *Effected_Lanes* (int) : Number of lanes that are disrupted due to incident.
+- *Coordinates* (str) : Mapping information of incident.
+- *Location* (str) : Name of the incident area.
+- *Accident_Types* (str) : Type of the traffic accident. 
 
 ### Learning Outcomes
 
-At the end of the study the group –a-k-a-r expect to observe;
+At the end of the study the group A.K.A - R expect to observe;
 
--	Turkey’s energy profile (renewable and nonrenewable energy production trends)
--	Whether there is a relationship in the type of energy generation method on an hourly, daily, monthly or quarterly basis.
--	Is there a relationship between the change in foreign currency and energy production method?
--	Is there a relationship between the change in foreign currency and export-import amounts (MWh)?
--	Whether the population growth has an effect on electricity generation, and if so, to determine whether it is equally divided among all production methods or one method is used more dominantly.
+-	Traffic announcement types and volume of the İstanbul city.
+-	Average magnitude of the announcement in terms of intervention time and effected lanes.
+-	The relationship between municipality election and the number of running projects/constructions and so forth.
+-	The effect of the pandemic on the accident notifications.
+-	The distribution of announcement types during holiday terms.
 
 ### Planning
 
 - Creating a project roadmap to get a clear overview of the objectives.
-- Adding external data sources like foreign currency and population.
+- Adding external data sources for holiday events.
 - Data Wrangling as preprocessing section.
-- Checking outliers and summarising data to deciding which central tendency method will be used for analysis.
-- Exploratory Data Analysis with R packages such as "dplyr" and "lubridate".
-- Visualizing data with R packages such as "ggplot2".
+- Checking outliers and summarizing data before Exploratory Data Analysis.
+- Exploratory Data Analysis with R packages such as “dplyr” and “lubridate”.
+- Visualizing data with R packages such as "ggplot2" and "leaflet".
 - Preparing a final Html report.
 - Final project presentation.
-
 
