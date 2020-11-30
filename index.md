@@ -15,6 +15,5 @@
 - [ISBike Analysis](https://aybikedilek.shinyapps.io/ISBike_Project/)
 
 ### Data
-- [Data](https://www.kaggle.com/hgultekin/hourly-power-production-of-turkey-20132020)
-- [Data Source](https://rapor.epias.com.tr/rapor/)
+- [Data Source - İBB Open Data Portal](https://data.ibb.gov.tr/dataset/ulasim-yonetim-merkezi-uym-tarafindan-sisteme-girilen-trafik-duyurulari)
 
