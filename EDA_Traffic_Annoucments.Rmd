@@ -45,7 +45,6 @@ The first step was combining the excel files, since there were two separate data
 ```{r,warning=FALSE,message=FALSE}
 DS_1 <- read_excel("C:/Users/Aybike/Desktop/2018-2019-yl-ulam-yonetim-merkezi-tarafndan-sisteme-girilen-trafik-duyurular.xlsx")
 DS_2 <- read_excel("C:/Users/Aybike/Desktop/2020-yl-ulam-yonetim-merkezi-tarafndan-sisteme-girilen-trafik-duyurular (1).xlsx")
-
 DS=rbind(DS_1,DS_2)
 ```
 
@@ -79,12 +78,10 @@ DS$Announcement_Types <- factor(DS$Announcement_Types,levels = c("Kaza Bildirimi
                                                              "Yolu Etkileyen Hava Koşulu",
                                                              "İmalat Çalışması","Diğer",
                                                              "Kontrollü Kapama (Protokol)","NULL"))
-
 levels(DS$Announcement_Types) <-c("Accident Notification","Traffic Jam","Vehicle Breakdown","News","Maintenance",
                                   "Landscaping","Vehicle Fire","Road Closure","Marine Traffic Information-State",
                                   "Marine Traffic Information-Private","Construction Work-Road","Infrastructure Work",
                                   "Weather Condition","Construction Work-Structure","Others","Road Closure-Protocol","NULL")
-
 ```
 
 The data type of the *Accident_Types* were converted from char to factor.
@@ -112,7 +109,6 @@ The traffic is assumed to be caused by two variables in our data set. These are,
 ```{r,warning=FALSE,message=FALSE}
 P1<- DS %>% mutate(Diff_Time_Hours = round(difftime(DS$Ending_Time,DS$Starting_Time)/3600,digits = 2))
 P1 <- P1 %>% mutate(Problem_Index = P1$Diff_Time_Hours*P1$Effected_Lanes)
-
 P1$Diff_Time_Hours = as.numeric(P1$Diff_Time_Hours)
 P1$Problem_Index = as.numeric(P1$Problem_Index)
 ```
@@ -126,7 +122,6 @@ P1_1 <- P1 %>% filter(Problem_Index >= 0) %>%
   filter(Problem_Index<= 3*sd(Problem_Index)+mean(Problem_Index) )%>%
   group_by(Announcement_Types) %>% summarise(Avg_Problem_Index = mean(Problem_Index),
   Count_Announcement_Types= n(), Sum_Problem_Index=sum(Problem_Index))%>% filter(Avg_Problem_Index > 0) 
-
 P1_1 <- data.frame(P1_1)
 P1_1<- P1_1[order(P1_1$Avg_Problem_Index,decreasing = TRUE), ]
 P1_1
@@ -171,7 +166,6 @@ In the sub-study below, it is examined whether there is a relationship between t
 
 ```{r,warning=FALSE,message=FALSE,echo=T, results='hide'}
 P2 = DS %>% filter(Announcement_Types %in% c('Landscaping','Maintenance','Infrastructure Work','Construction Work-Structure','Construction Work-Road')& Effected_Lanes >= 0)
-
 P2_1 = P2 %>% group_by(Year_Quarter= lubridate::quarter(Starting_Time, with_year = TRUE)) %>% summarise(n = n())
 P2_1$Year_Quarter = factor(P2_1$Year_Quarter)
 P2_1=P2_1 %>% filter(Year_Quarter != "2020.4")
@@ -203,12 +197,10 @@ As a third section, it is investigated whether there is an effect of the pandemi
 
 ```{r,warning=FALSE,message=FALSE,echo=T, results='hide'}
 P3=setDT(DS)[, Year_Month := format(as.Date(`Starting_Time`), "%Y-%m") ]
-P3=setDT(P3)[, Year := format(as.Date(`Starting_Time`), "%Y") ]
-P3=setDT(P3)[, Month := format(as.Date(`Starting_Time`), "%m") ]
-P3=setDT(P3)[, Day := format(as.Date(`Starting_Time`), "%d") ]
+P3= P3 %>% mutate(Year=year(Starting_Time),Day=day(Starting_Time))
 
-P3_1 = P3 %>% filter(Announcement_Types == "Accident Notification" & Effected_Lanes >= 0 & Year_Month != "2020-11") %>% group_by(Year_Month,Year,Month) %>% summarise(n = n())
-
+P3_1 = P3 %>% filter(Announcement_Types == "Accident Notification" & Effected_Lanes >= 0 & Year_Month != "2020-11") %>% group_by(Year_Month,Year) %>% summarise(n = n())
+P3_1$Year=as.factor(P3_1$Year)
 ```
 
 The number of Accidents are shown on the bar chart on a year-month basis. The bar chart has been colored on an annual basis for a clear view.
@@ -223,6 +215,7 @@ ggplot(P3_1,aes(x=Year_Month,y = n)) + geom_bar(stat="identity",aes(fill=Year))+
 
 ```{r,warning=FALSE,message=FALSE}
 P3_2 = P3 %>% filter(Announcement_Types == "Accident Notification" & Effected_Lanes >= 0 & Year_Month == "2018-07") %>% group_by(Day) %>% summarise(n = n())
+P3_2$Day=as.factor(P3_2$Day)
 ggplot(P3_2,aes(x=Day,y = n)) + geom_bar(stat="identity",fill="#FFC300", colour="black")+theme(axis.text.x = element_text(angle = 90, hjust = 1)) + geom_hline(yintercept=45, color="red")+
 labs(title = "The number of Accidents on a Daily basis",subtitle = "July,2018")
 ```
@@ -232,7 +225,7 @@ labs(title = "The number of Accidents on a Daily basis",subtitle = "July,2018")
 
 ### SET-4
 
-In the final section, official holiday events are introduced to the data set in order to define holiday periods in the data. For instance, 'Christmas', 'Labor Day', 'Ramadan', 'National Sovereignty and Children's Day' and 'May 19 Commemoration of Atatürk and Youth and Sports Day'. In the data set, weeks that are includes any of the holiday event are taken into consideration.
+In the final section, official holiday events are introduced to the data set in order to define holiday periods in the data. For instance, 'New Year', 'Labor Day', 'Ramadan', 'National Sovereignty and Children's Day' and 'May 19 Commemoration of Atatürk and Youth and Sports Day'. In the data set, weeks that are includes any of the holiday event are taken into consideration.
 
 Announcements that are reported during the holiday week are counted. Then, total number of announcements are shown on the pie chart in order to interpret the most common
 announcement reasons in the holiday term.
@@ -243,7 +236,6 @@ The external data source is added  for holiday events.
 
 ```{r,warning=FALSE,message=FALSE}
 holidayCalendar <- read_excel("CalendarEvents.xlsx")
-
 P4 <- DS %>%
 mutate(weekStarting_Time = lubridate::week(DS$Starting_Time), yearDS =
 lubridate::year(DS$Starting_Time))
@@ -274,6 +266,10 @@ highest percentage among announcement types.
 
 ## References
 
-- [Data Source](https://data.ibb.gov.tr/dataset/ulasim-yonetim-merkezi-uym-tarafindan-sisteme-girilen-trafik-duyurulari)
+- [Data Source - İBB Open Data Portal](https://data.ibb.gov.tr/dataset/ulasim-yonetim-merkezi-uym-tarafindan-sisteme-girilen-trafik-duyurulari)
 
-- [External Data Source](https://www.tatilsepeti.com/resmi-tatil-gunleri)
+- [External Data Source - Holiday Events](https://www.tatilsepeti.com/resmi-tatil-gunleri)
+
+- [Data Source - Mapping](https://medium.com/@joyplumeri/how-to-make-interactive-maps-in-r-shiny-brief-tutorial-c2e1ef0447da)
+
+*You may click* [here](https://pjournal.github.io/mef04g-a-k-a-r/) *to reach other items of A.K.A - R Group’s Progress Journal.* 
