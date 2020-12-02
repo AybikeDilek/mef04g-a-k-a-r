@@ -50,8 +50,8 @@ The data is collected from [İBB Open Data Portal](https://data.ibb.gov.tr/datas
 
 At the end of the study the group A.K.A - R expect to observe;
 
--	Traffic announcement types and volume of the İstanbul city.
--	Average magnitude of the announcement in terms of intervention time and effected lanes.
+-	Calculate and infer the average problem index (indicator crated by the group) of each announcement type/event.
+-	To observe, the 5 accomplished projects in the last 3 years, with the highest problem index (indicator created by the group) and affected locations.
 -	The relationship between municipality election and the number of running projects/constructions and so forth.
 -	The effect of the pandemic on the accident notifications.
 -	The distribution of announcement types during holiday terms.
@@ -66,4 +66,3 @@ At the end of the study the group A.K.A - R expect to observe;
 - Visualizing data with R packages such as "ggplot2" and "leaflet".
 - Preparing a final Html report.
 - Final project presentation.
-
