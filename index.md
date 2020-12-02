@@ -17,5 +17,5 @@
 
 ### Data
 - [Data Source - İBB Open Data Portal](https://data.ibb.gov.tr/dataset/ulasim-yonetim-merkezi-uym-tarafindan-sisteme-girilen-trafik-duyurulari)
-- [External Data Source](https://www.tatilsepeti.com/resmi-tatil-gunleri)
+- [External Data Source - Holiday Events](https://www.tatilsepeti.com/resmi-tatil-gunleri)
 
