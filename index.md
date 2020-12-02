@@ -10,7 +10,7 @@
 
 ### Project Links
 - [Project Proposal](Project-Proposal.html)
-- [Exploratory Data Analysis of Project](EDA_Traffic_Annoucments.html)
+- [Exploratory Data Analysis of Project](EDA_Traffic_Announcements.html)
 
 ### Assignment Links
 - [ISBike Analysis](https://aybikedilek.shinyapps.io/ISBike_Project/)
