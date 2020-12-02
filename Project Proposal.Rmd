@@ -66,3 +66,5 @@ At the end of the study the group A.K.A - R expect to observe;
 - Visualizing data with R packages such as "ggplot2" and "leaflet".
 - Preparing a final Html report.
 - Final project presentation.
+
+*You may click* [here](https://pjournal.github.io/mef04g-a-k-a-r/) *to reach other items of A.K.A - R Group’s Progress Journal.* 
