@@ -14,7 +14,7 @@
 
 - [Project Proposal](Project-Proposal.html)
 - [Exploratory Data Analysis of Project](EDA_Traffic_Announcements.html) 
-- [Exploratory Data Analysis of Project PDF](EDA-of-Traffic-Announcements--Istanbul-UYM-_PDF.pdf) 
+- [Exploratory Data Analysis of Project - PDF](EDA-of-Traffic-Announcements--Istanbul-UYM-_PDF.pdf) 
 
 #### Data Sources
 
