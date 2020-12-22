@@ -8,15 +8,23 @@
 - [Alican Sevimay](https://pjournal.github.io/mef04-AlicanSevimay/)
 - [Betül Parlar](https://pjournal.github.io/mef04-parlarbetul/)
 
-### Project Links
+### Group Term Project 
+
+#### Traffic Announcements of İstanbul (2018-2020)
+
 - [Project Proposal](Project-Proposal.html)
 - [Exploratory Data Analysis of Project](EDA_Traffic_Announcements.html) 
 - [Exploratory Data Analysis of Project PDF](EDA-of-Traffic-Announcements--Istanbul-UYM-_PDF.pdf) 
 
-### Assignment Links
-- [ISBike Analysis](https://aybikedilek.shinyapps.io/ISBike_Project/)
+#### Data Sources
 
-### Data
-- [Data Source - İBB Open Data Portal](https://data.ibb.gov.tr/dataset/ulasim-yonetim-merkezi-uym-tarafindan-sisteme-girilen-trafik-duyurulari)
+- [Traffic Announcements of İstanbul - İBB Open Data Portal](https://data.ibb.gov.tr/dataset/ulasim-yonetim-merkezi-uym-tarafindan-sisteme-girilen-trafik-duyurulari)
 - [External Data Source - Holiday Events](https://www.tatilsepeti.com/resmi-tatil-gunleri)
+
+### Group Assignment
+
+#### isbike Assignment
+
+- [isbike Analysis](https://aybikedilek.shinyapps.io/ISBike_Project/)
+
 
