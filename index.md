@@ -17,7 +17,7 @@ We analyzed the Traffic Announcements of İstanbul (2018-2020).
 - [Exploratory Data Analysis of Project](EDA_Traffic_Announcements.html) 
 - [Exploratory Data Analysis of Project - PDF](EDA-of-Traffic-Announcements--Istanbul-UYM-_PDF.pdf) 
 
-##### Key Takeaways
+#### Key Takeaways
 At the end of the study, the group A.K.A - R observed the following takeaways;
 
 - We calculated and infered the average problem index (indicator crated by the group) of each announcement type/event.
