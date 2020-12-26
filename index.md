@@ -24,7 +24,7 @@ At the end of the study, the group A.K.A - R observed the following takeaways;
 - We observed the five accomplished projects in the last three years, with the highest problem index (indicator created by the group) and affected locations. S.Yolu Z.Burnu-Bakırköy had the highest problem index. This project took approximately six months.
 - We investigated the relationship between municipality election and the number of running projects/constructions and so forth.
 - We checked the effect of the pandemic on the accident notifications and seen that there was a strong effect of the pandemic due to the lockdowns between March and April in 2020. 
-- We showed the distribution of announcement types during holiday terms.
+- We showed the distribution of announcement types during holiday terms and commented on the reasons behind these announcements.
 
 #### Data Sources
 
