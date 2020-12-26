@@ -21,9 +21,10 @@ We analyzed the Traffic Announcements of İstanbul (2018-2020).
 #### Key Takeaways
 At the end of the study, the group A.K.A - R observed the following takeaways;
 
-- We calculated and infered the average problem index (indicator crated by the group) of each announcement type/event.
+- We searched the most problamatic announcement types in our dataset with Problem Index variable which is calculated from the multiplication of the duration and effected lanes. 
+We observed that within the range of minimum and maximum problem index values, infrastructure work had the largest share.
 - We observed the five accomplished projects in the last three years, with the highest problem index (indicator created by the group) and affected locations. S.Yolu Z.Burnu-Bakırköy had the highest problem index. This project took approximately six months.
-- We investigated the relationship between municipality election and the number of running projects/constructions and so forth.
+-   We investigated the relationship between municipality election and the number of running projects/constructions and so forth. At the end of the study we observed, strong relationship between these two factors. Such as; a sharp decrease in the number of projects carried out during the election, and a sharp increase in numbers at the post-election period.
 - We checked the effect of the pandemic on the accident notifications and seen that there was a strong effect of the pandemic due to the lockdowns between March and April in 2020. 
 - We showed the distribution of announcement types during holiday terms and commented on the reasons behind these announcements. It can be said that precautions should be prepared for 'accident announcement' and 'vehicle breakdown' during the holidays, and also, the municipality concentrates on maintenance work.
 
