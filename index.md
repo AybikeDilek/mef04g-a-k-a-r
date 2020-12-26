@@ -33,7 +33,7 @@ We saw that within the range of minimum and maximum problem index values, infras
 
 - [Traffic Announcements of İstanbul - İBB Open Data Portal](https://data.ibb.gov.tr/dataset/ulasim-yonetim-merkezi-uym-tarafindan-sisteme-girilen-trafik-duyurulari)
 - [External Data Source - Holiday Events](https://www.tatilsepeti.com/resmi-tatil-gunleri)
-- [RData](https://github.com/pjournal/mef04g-a-k-a-r/blob/gh-pages/Project_Datasets/data.RData)
+- [RData File](https://github.com/pjournal/mef04g-a-k-a-r/blob/gh-pages/Project_Datasets/data.RData)
 
 ### Group Assignment
 
