@@ -9,7 +9,7 @@
 - [Betül Parlar](https://pjournal.github.io/mef04-parlarbetul/)
 
 ### Group Term Project 
-We analyzed the Traffic Announcements of İstanbul (2018-2020).
+The group analyzed, traffic announcements entered into the system from January 2018 to October 2020 by the transportation management center of İstanbul Municipality. In dataset there are 12 variables such as; Announcement Type, Starting and ending time of the event, Location, etc. and 58,422 records. The aim of the group was to conduct various analyzes using these 12 variables either individually or together.
 
 #### Traffic Announcements of İstanbul (2018-2020)
 
