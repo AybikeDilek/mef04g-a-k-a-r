@@ -16,7 +16,7 @@ We analyzed the Traffic Announcements of İstanbul (2018-2020).
 - [Project Proposal](Project-Proposal.html)
 - [Exploratory Data Analysis of Project](EDA_Traffic_Announcements.html) 
 - [Exploratory Data Analysis of Project - PDF](EDA-of-Traffic-Announcements--Istanbul-UYM-_PDF.pdf) 
-- [ShinyApps](https://aybikedilek.shinyapps.io/ShinyApps_of_EDA/)
+- [ShinyApps](https://aybikedilek.shinyapps.io/ShinyApps_of_EDA/) 
 
 #### Key Takeaways
 At the end of the study, the group A.K.A - R observed the following takeaways;
