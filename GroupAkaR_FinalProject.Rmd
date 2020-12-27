@@ -131,21 +131,21 @@ P1$Problem_Index = as.numeric(P1$Problem_Index)
 P1_1 <- P1 %>% filter(Problem_Index >= 0) %>% 
   filter(Problem_Index<= 3*sd(Problem_Index)+mean(Problem_Index) )%>%
   group_by(Announcement_Types) %>% summarise(Avg_Problem_Index = mean(Problem_Index),
-  Count_Announcement_Types= n(), Sum_Problem_Index=sum(Problem_Index))%>% filter(Avg_Problem_Index > 0) 
+  CountAnnouncement= n(), SumIndex=sum(Problem_Index))%>% filter(Avg_Problem_Index > 0) 
 P1_1 <- data.frame(P1_1)
 P1_1<- P1_1[order(P1_1$Avg_Problem_Index,decreasing = TRUE), ]
 P1_1
 ```
 
-- It is shown that infrastructural or road constructional incidences were the worst traffic makers on average. However, car accidents and maintenance works occurred more frequently.Therefore, when it was summed up, these were the main traffic generators in total.
-
 The distribution of the announcement types regarding to the average problem index, are shown on the pie chart.
 
-```{r,warning=FALSE,message=FALSE,echo=FALSE,fig.height = 4, fig.width = 6,fig.align= "center"}
-ggplot(P1_1,aes(x="", y=Avg_Problem_Index, fill=Announcement_Types)) +geom_bar(stat='identity',width = 1)+coord_polar("y")+labs(title = "The distribution of the Announcement Types regarding to the Avg Problem Index")
+```{r,warning=FALSE,message=FALSE,echo=FALSE,fig.height = 4, fig.width = 10,fig.align= "center"}
+ggplot(P1_1,aes(x="", y=Avg_Problem_Index, fill=Announcement_Types)) +geom_bar(stat='identity',width = 1)+coord_polar("y")+labs(title = "The Distribution of the Announcement Types Regarding to the Avg Problem Index")
 ```
 
-- TOP 5 locations regarding problem index:
+- It is shown that infrastructural or road constructional incidences were the worst traffic makers on average. However, car accidents and maintenance works occurred more frequently.Therefore, when it was summed up, these were the main traffic generators in total.
+
+TOP 5 locations regarding problem index:
 ```{r,warning=FALSE,message=FALSE,echo=FALSE,fig.align= "center"}
 P1_2 <- P1 %>% filter(Problem_Index >= 0) %>% select(Location,Problem_Index,Coordinates)
 P1_2 <- data.frame(P1_2)
@@ -177,7 +177,7 @@ P2_1=P2_1 %>% filter(Year_Quarter != "2020.4")
 ```
 
 ```{r,warning=FALSE,message=FALSE,echo=FALSE,fig.height = 4, fig.width = 6,fig.align= "center"}
-ggplot(P2_1, aes(x=Year_Quarter, y=n)) + geom_bar(stat="identity", position="dodge",fill="#d3501d", colour="black")+ theme_minimal()+ labs(title = "The number of Running Projects on a Quarterly basis",subtitle ="From 2018 to 2020")
+ggplot(P2_1, aes(x=Year_Quarter, y=n)) + geom_bar(stat="identity", position="dodge",fill="#d3501d", colour="black")+ theme_minimal()+ labs(title = "The Number of Running Projects on a Quarterly Basis",subtitle ="From 2018 to 2020")
 ```
 <font size="1.8">*Since the November of 2020 is not completed yet, is not included in the study and date-related recording errors are kept on the subset. *</font>
 
@@ -206,10 +206,10 @@ P3_1 = P3 %>% filter(Announcement_Types == "Accident Notification" & Effected_La
 P3_1$Year=as.factor(P3_1$Year)
 ```
 
-- The number of Accidents are shown on the bar chart on a year-month basis. The bar chart has been colored on an annual basis for a clear view.
+The number of Accidents are shown on the bar chart on a year-month basis. The bar chart has been colored on an annual basis for a clear view.
 
 ```{r,warning=FALSE,message=FALSE,echo=FALSE,fig.height = 4, fig.width = 6,fig.align= "center"}
-ggplot(P3_1,aes(x=Year_Month,y = n)) + geom_bar(stat="identity",aes(fill=Year))+theme(axis.text.x = element_text(angle = 90, hjust = 1)) + labs(title = "The number of Accidents on a Year-Month basis",subtitle ="From 2018 to 2020")
+ggplot(P3_1,aes(x=Year_Month,y = n)) + geom_bar(stat="identity",aes(fill=Year))+theme(axis.text.x = element_text(angle = 90, hjust = 1)) + labs(title = "The Number of Accidents on a Year-Month Basis",subtitle ="From 2018 to 2020")
 ```
 <font size="1.8">*Since the November of 2020 is not completed yet, is not included in the study and date-related recording errors are kept on the subset. *</font>
 
@@ -257,9 +257,9 @@ chart.
 
 ```{r,warning=FALSE,message=FALSE,echo=FALSE,fig.height = 5, fig.width = 7,fig.align= "center"}
 ggplot(P4_1,aes(x="", y=n, fill=Announcement_Types)) +geom_bar(stat='identity',width =
-1)+coord_polar("y")+scale_fill_hue(l=85)+labs(title = "The distribution of Announcement Types during Holiday Weeks")
+1)+coord_polar("y")+scale_fill_hue(l=85)+labs(title = "The Distribution of Announcement Types During Holiday Weeks")
 ```
-<font size="1.8">*The external data source is added  for holiday events.*</font>
+*The external data source is added  for holiday events.*
 
 <font size="1.8">*Date-related recording errors are kept on the subset.*</font>
 
