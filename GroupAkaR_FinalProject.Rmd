@@ -14,6 +14,9 @@ output:
 h1.title{
   color:#d3501d;
 }
+h1{
+  color:#084a4a;
+}
 h2{
   color:#084a4a;
 }
@@ -34,17 +37,17 @@ library(leaflet)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Traffic Announcements of Istanbul (2018 - 2020)
+## Traffic Announcements of Istanbul (2018 - 2020)
 
 The group analyzed, traffic announcements entered into the system from January 2018 to October 2020 by the transportation management center of İstanbul Municipality. In dataset there are 12 variables such as; Announcement Type, Starting and ending time of the event, Location, etc. and 58,422 records. The aim of the group was to conduct various analyzes using these 12 variables either individually or together.
 
-[Click Here for Project Data](https://github.com/pjournal/mef04g-a-k-a-r/blob/gh-pages/Project_Datasets/data.RData)
+[Click here for the Project Data](https://github.com/pjournal/mef04g-a-k-a-r/blob/gh-pages/Project_Datasets/data.RData)
 
-[Click Here for Project Proposal](https://pjournal.github.io/mef04g-a-k-a-r/Project-Proposal.html)
+[Click here for the Project Proposal](https://pjournal.github.io/mef04g-a-k-a-r/Project-Proposal.html)
 
-[Click Here for Project EDA PDF](https://pjournal.github.io/mef04g-a-k-a-r/EDA-of-Traffic-Announcements--Istanbul-UYM-_PDF.pdf)
+[Click here for the Project EDA PDF](https://pjournal.github.io/mef04g-a-k-a-r/EDA-of-Traffic-Announcements--Istanbul-UYM-_PDF.pdf)
 
-#### Key Takeaways
+### Key Takeaways
 At the end of the study, the group A.K.A - R observed the following takeaways;
 
 - We searched the most problamatic announcement types in our dataset with Problem Index variable which is calculated from the multiplication of the duration and effected lanes. 
@@ -270,7 +273,7 @@ highest percentage among announcement types.
 
 
 
-## References
+### References
 
 - [Data Source - İBB Open Data Portal](https://data.ibb.gov.tr/dataset/ulasim-yonetim-merkezi-uym-tarafindan-sisteme-girilen-trafik-duyurulari)
 
