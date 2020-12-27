@@ -221,7 +221,7 @@ ggplot(P3_1,aes(x=Year_Month,y = n)) + geom_bar(stat="identity",aes(fill=Year))+
 P3_2 = P3 %>% filter(Announcement_Types == "Accident Notification" & Effected_Lanes >= 0 & Year_Month == "2018-07") %>% group_by(Day) %>% summarise(n = n())
 P3_2$Day=as.factor(P3_2$Day)
 ggplot(P3_2,aes(x=Day,y = n)) + geom_bar(stat="identity",fill="#FFC300", colour="black")+theme(axis.text.x = element_text(angle = 90, hjust = 1)) + geom_hline(yintercept=45, color="red")+
-labs(title = "The number of Accidents on a Daily basis",subtitle = "July,2018")
+labs(title = "The Number of Accidents on a Daily Basis",subtitle = "July,2018")
 ```
 
 * 13th and 16th of July had the highest number of Accidents. 15'th of July is a national holiday in Turkey. 15'th of July was Sunday so the increase of these days could be because of that people tend to combine holidays and travel more before and after national holidays. 
