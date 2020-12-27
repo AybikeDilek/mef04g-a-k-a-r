@@ -39,6 +39,8 @@ We saw that within the range of minimum and maximum problem index values, infras
 
 #### isbike Assignment
 
+In this section, open source data by Istanbul Metropolitan Municipality bicycle services ISBIKE is analyzed.The data set includes Istanbul bicycle station and utilization data in text JSON format. The data shows station locations and activity status of bicycles. The purpose of the following study is the demonstrate the dynamic available bike ratio for each station on bar graph and map, using the 'shinyapp'.
+
 - [isbike Analysis](https://aybikedilek.shinyapps.io/ISBike_Project/)
 
 
