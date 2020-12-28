@@ -98,7 +98,6 @@ levels(DS$Accident_Types) <- c("Vehicle Damage Only", "w/ Injuries","Pile-up Acc
 
 The various data analysis and visualizations will be made on EDA part.
 In further analysis *dplyr* and *tidyverse* package will be used for data manipulation, *ggplot2* package will be used for creating plots and visuals and *lubridate* package will be  used to make it easier to work with dates and times, *data.table* package will be used to make it easier to work with data tables, *leaflet* package will be used to mapping.
-
 In order to get healthy and reliable results, care has been taken to ensure that the ending time of the project/construction etc. is greater than the starting time of it. But, since the date and time structure has been changed since 2020, it is observed that in some records ending time is smaller than starting time -Especially in recordings between 11 am to 2 pm -. In order to make this point clear, we want to give an example. Announcement ID: 602730, Landscaping project, starting time is 10/15/2020 10:49 AM and ending time is 10/15/2020 3:17:00 AM. Ending time of this project looks smaller than starting time, the reason why it is wrong is the difference in am/pm. Since there are many such erroneous records, these records were filtered out in calculations but were kept in count operations.
 
 Besides, there were negative values for *Effected_Lanes*, these were excluded.
@@ -135,8 +134,6 @@ P1_1<- P1_1[order(P1_1$Avg_Problem_Index,decreasing = TRUE), ]
 P1_1
 ```
 
-It is shown that infrastructural or road constructional incidences were the worst traffic makers on average. However, car accidents and maintenance works occurred more frequently.Therefore, when it was summed up, these were the main traffic generators in total. 
-
 The distribution of the announcement types regarding to the average problem index, are shown on the pie chart.
 
 ```{r,fig.height = 6, fig.width = 9,warning=FALSE,message=FALSE}
@@ -147,10 +144,11 @@ labs(title =
 "The distribution of the Announcement Types regarding to the Avg Problem Index")
 ```
 
+* It is shown that infrastructural or road constructional incidences were the worst traffic makers on average. However, car accidents and maintenance works occurred more frequently.Therefore, when it was summed up, these were the main traffic generators in total. 
+
 In order to identify top 5 locations regarding problem index, the calculations are done. 
 
 *Date-related recording errors are filtered out from the subset because of the calculations.* 
-
 ```{r,fig.height = 6, fig.width = 9,warning=FALSE,message=FALSE}
 P1_2 <- P1 %>% filter(Problem_Index >= 0) %>% select(Location,Problem_Index,Coordinates)
 P1_2 <- data.frame(P1_2)
@@ -161,10 +159,7 @@ P1_2$X2=as.double(P1_2$X2)
 P1_2$X1=as.double(P1_2$X1)
 P1_2  %>% select(Location,Problem_Index)
 ```
-
 These 5 locations are shown on the map.
-
-
 ```{r,warning=FALSE,message=FALSE}
 leaflet(P1_2) %>% 
   setView(lng = 28.70, lat = 41, zoom = 9.1)  %>% 
@@ -181,7 +176,6 @@ leaflet(P1_2) %>%
 In the sub-study below, it is examined whether there is a relationship between the municipality elections and the number of running projects/constructions etc.
 
 *Since the November of 2020 is not completed yet, is not included in the study and date-related recording errors are kept on the subset. *
-
 ```{r,fig.height = 6, fig.width = 9,warning=FALSE,message=FALSE}
 P2 = DS %>% 
 filter(Announcement_Types %in% c('Landscaping',
@@ -195,9 +189,7 @@ summarise(n = n())
 P2_1$Year_Quarter = factor(P2_1$Year_Quarter)
 P2_1=P2_1 %>% filter(Year_Quarter != "2020.4")
 ```
-
 The number of the running projects such as construction, landscaping are shown on the bar chart on a quarterly basis.
-
 ```{r,fig.height = 6, fig.width = 9,warning=FALSE,message=FALSE}
 ggplot(P2_1, aes(x=Year_Quarter, y=n)) + 
 geom_bar(stat="identity", position="dodge",fill="#d3501d", colour="black")+ 
@@ -223,20 +215,16 @@ subtitle ="From 2018 to 2020")
 As a third section, it is investigated whether there is an effect of the pandemic on the number of Accidents.
 
 *Since the November of 2020 is not completed yet, is not included in the study and date-related recording errors are kept on the subset. *
-
 ```{r,fig.height = 6, fig.width = 9,warning=FALSE,message=FALSE}
 P3=setDT(DS)[, Year_Month := format(as.Date(`Starting_Time`), "%Y-%m") ]
 P3= P3 %>% mutate(Year=year(Starting_Time),Day=day(Starting_Time))
-
 P3_1 = P3 %>% 
 filter(Announcement_Types == "Accident Notification" & 
 Effected_Lanes >= 0 & Year_Month != "2020-11") %>% 
 group_by(Year_Month,Year) %>% summarise(n = n())
 P3_1$Year=as.factor(P3_1$Year)
 ```
-
 The number of Accidents are shown on the bar chart on a year-month basis. The bar chart has been colored on an annual basis for a clear view.
-
 ```{r,fig.height = 6, fig.width = 9,warning=FALSE,message=FALSE}
 ggplot(P3_1,aes(x=Year_Month,y = n)) + 
 geom_bar(stat="identity",aes(fill=Year))+
@@ -265,18 +253,14 @@ labs(title = "The number of Accidents on a Daily basis",subtitle = "July,2018")
 
 * 13th and 16th of July had the highest number of Accidents. 15'th of July is a national holiday in Turkey. 15'th of July was Sunday so the increase of these days could be because of that people tend to combine holidays and travel more before and after national holidays. 
 
-
 ### SET-4
 
 In the final section, official holiday events are introduced to the data set in order to define holiday periods in the data. For instance, 'New Year', 'Labor Day', 'Ramadan', 'National Sovereignty and Children's Day' and 'May 19 Commemoration of Atatürk and Youth and Sports Day'. In the data set, weeks that are includes any of the holiday event are taken into consideration.
-
 Announcements that are reported during the holiday week are counted. Then, total number of announcements are shown on the pie chart in order to interpret the most common
 announcement reasons in the holiday term.
-
 The external data source is added  for holiday events.
 
 *Date-related recording errors are kept on the subset.*
-
 ```{r,fig.height = 6, fig.width = 9,warning=FALSE,message=FALSE}
 holidayCalendar <- read_excel("CalendarEvents.xlsx")
 P4 <- DS %>%
@@ -290,30 +274,24 @@ P4$yearDS==holidayCalendar$Year)) %>%
 filter(Effected_Lanes >= 0 & holidayWeek==TRUE) %>%
 group_by(Announcement_Types) %>% count(Announcement_Types)
 ```
-
 The distribution of Announcement Types during holiday weeks are shown in the below pie
 chart.
-
 ```{r,fig.height = 6, fig.width = 9,warning=FALSE,message=FALSE}
 ggplot(P4_1,aes(x="", y=n, fill=Announcement_Types)) +geom_bar(stat='identity',width =1)+
 coord_polar("y")+scale_fill_hue(l=85)+
 labs(title = "The distribution of Announcement Types during Holiday Weeks")
 ```
 
-* In the holiday periods, majority of traffic announcements are occurred by the accident
-notification records. Presumably, increased intercity travels are caused to accidents during holiday week.
+* In the holiday periods, majority of traffic announcements are occurred by the accident notification records. Presumably, increased intercity travels are caused to accidents during holiday week.
 
-* Similarly, vehicle breakdown is affected by heavy travel demand and has got the second
-highest percentage among announcement types.
+* Similarly, vehicle breakdown is affected by heavy travel demand and has got the second highest percentage among announcement types.
 
 * Remarkable results belong to the number of Maintenance. Municipality may prefer to complete road works when the city is relatively empty because traffic on the road will be less than the regular term. Under this circumstances, working on road maintenance will be more productive.
 
 ## References
 
 - [Data Source - İBB Open Data Portal](https://data.ibb.gov.tr/dataset/ulasim-yonetim-merkezi-uym-tarafindan-sisteme-girilen-trafik-duyurulari)
-
 - [External Data Source - Holiday Events](https://www.tatilsepeti.com/resmi-tatil-gunleri)
-
 - [Mapping Link](https://medium.com/@joyplumeri/how-to-make-interactive-maps-in-r-shiny-brief-tutorial-c2e1ef0447da)
 
 *You may click* [here](https://pjournal.github.io/mef04g-a-k-a-r/) *to reach other items of A.K.A - R Group’s Progress Journal.* 
