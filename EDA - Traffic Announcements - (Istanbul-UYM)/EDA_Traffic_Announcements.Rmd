@@ -281,4 +281,5 @@ highest percentage among announcement types.
 - [Data Source - İBB Open Data Portal](https://data.ibb.gov.tr/dataset/ulasim-yonetim-merkezi-uym-tarafindan-sisteme-girilen-trafik-duyurulari)
 - [External Data Source - Holiday Events](https://www.tatilsepeti.com/resmi-tatil-gunleri)
 - [Mapping Link](https://medium.com/@joyplumeri/how-to-make-interactive-maps-in-r-shiny-brief-tutorial-c2e1ef0447da)
+
 *You may click* [here](https://pjournal.github.io/mef04g-a-k-a-r/) *to reach other items of A.K.A - R Group’s Progress Journal.* 
