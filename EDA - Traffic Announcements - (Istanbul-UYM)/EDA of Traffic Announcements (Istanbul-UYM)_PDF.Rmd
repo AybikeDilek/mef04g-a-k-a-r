@@ -1,0 +1,319 @@
+---
+title: "EDA of Traffic Announcements (Istanbul-UYM)"
+date: "13 12 2020"
+output: pdf_document
+toc: true
+fontsize: 10pt
+geometry:
+- top=30mm
+- left=20mm
+- heightrounded
+---
+```{r setup, include=FALSE}
+library(tidyverse)
+library(readxl)
+library(lubridate)
+library(data.table)
+library(leaflet)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{css, echo = FALSE}
+h1.title{
+  color:#d3501d;
+}
+h2{
+  color:#084a4a;
+}
+h3{
+  color:#084a4a;
+}
+h4{
+  color:#084a4a;
+}
+```
+
+# EDA of Traffic Announcements
+
+This dataset contains set of traffic announcements entered into the system by the Transport Management Center operators from 2018 to 2020. There are 12 variables and 58422 observations.
+
+[Project Proposal Link](https://pjournal.github.io/mef04g-a-k-a-r/Project-Proposal.html)
+
+## Preprocessing
+
+The first step was combining the excel files, since there were two separate datasets.
+```{r,fig.height = 6, fig.width = 9, echo=FALSE,warning=FALSE}
+DS_1 <- read_excel("2018-2019-yl-ulam-yonetim-merkezi-tarafndan-sisteme-girilen-trafik-duyurular.xlsx")
+DS_2 <- read_excel("C:/Users/Aybike/Desktop/2020-yl-ulam-yonetim-merkezi-tarafndan-sisteme-girilen-trafik-duyurular (1).xlsx")
+DS=rbind(DS_1,DS_2)
+```
+
+The name of variables were converted to ENG.
+``````{r,fig.height = 6, fig.width = 9, echo=FALSE,warning=FALSE}
+colnames(DS)[1]='Announcement_ID'
+colnames(DS)[2]='Announcement_Types'
+colnames(DS)[3]='Announcement_Title'
+colnames(DS)[4]='Announcement_Text'
+colnames(DS)[5]='Starting_Time'
+colnames(DS)[6]='Ending_Time'
+colnames(DS)[7]='Intervention_Time'
+colnames(DS)[8]='Accident_Situation'
+colnames(DS)[9]='Effected_Lanes'
+colnames(DS)[10]='Coordinates'
+colnames(DS)[11]='Location'
+colnames(DS)[12]='Accident_Types'
+```
+
+The data type of the *Announcement_Types* were converted from char to factor.
+The values of the *Announcement_Types* were converted to ENG. 
+```{r,fig.height = 6, fig.width = 9, echo=FALSE,warning=FALSE}
+DS$Announcement_Types <- factor(DS$Announcement_Types,levels = c("Kaza Bildirimi", "Yoğun Trafik", 
+                                                             "Araç Arızası", "Haber",
+                                                             "Bakım-Onarım Çalışması",
+                                                             "Çevre Düzenlemesi", "Araç Yangını",
+                                                             "Yolun Trafiğe Kapanması",
+                                                             "Şehir Hatları Sefer Bildirisi",
+                                                             "İDO Sefer Bildirisi","Yol Yapım Çalışması",
+                                                             "Alt Yapı Çalışması",
+                                                             "Yolu Etkileyen Hava Koşulu",
+                                                             "İmalat Çalışması","Diğer",
+                                                             "Kontrollü Kapama (Protokol)","NULL"))
+
+levels(DS$Announcement_Types) <-c("Accident Notification","Traffic Jam","Vehicle Breakdown","News","Maintenance",
+                                  "Landscaping","Vehicle Fire","Road Closure","Marine Traffic Information-State",
+                                  "Marine Traffic Information-Private","Construction Work-Road","Infrastructure Work",
+                                  "Weather Condition","Construction Work-Structure","Others","Road Closure-Protocol","NULL")
+```
+
+The data type of the *Accident_Types* were converted from char to factor.
+The values of the *Accident_Types* were converted to ENG.
+```{r,fig.height = 6, fig.width = 9, echo=FALSE,warning=FALSE}
+DS$Accident_Types <- factor(DS$Accident_Types,levels = c("trafik kazası (hasarlı)", 
+                                                         "trafik kazası (yaralanmalı)", 
+                                                         "trafik kazası (zincirleme)", "trafik kazası (can kaybı)",                                                        "Seçiniz")) 
+levels(DS$Accident_Types) <- c("Vehicle Damage Only", "w/ Injuries","Pile-up Accident", "w/ Fatality","Others")
+```
+
+## EDA
+
+The various data analysis and visualizations will be made on EDA part.
+In further analysis *dplyr* and *tidyverse* package will be used for data manipulation, *ggplot2* package will be used for creating plots and visuals and *lubridate* package will be  used to make it easier to work with dates and times, *data.table* package will be used to make it easier to work with data tables, *leaflet* package will be used to mapping.
+
+In order to get healthy and reliable results, care has been taken to ensure that the ending time of the project/construction etc. is greater than the starting time of it. But, since the date and time structure has been changed since 2020, it is observed that in some records ending time is smaller than starting time -Especially in recordings between 11 am to 2 pm -. In order to make this point clear, we want to give an example. Announcement ID: 602730, Landscaping project, starting time is 10/15/2020 10:49 AM and ending time is 10/15/2020 3:17:00 AM. Ending time of this project looks smaller than starting time, the reason why it is wrong is the difference in am/pm. Since there are many such erroneous records, these records were filtered out in calculations but were kept in count operations.
+
+Besides, there were negative values for *Effected_Lanes*, these were excluded.
+
+### SET-1
+
+The traffic is assumed to be caused by two variables in our data set. These are, number of lanes affected from the incident and the duration of it. So “Problem Index” is created from multiplication of these variables .
+
+```{r,fig.height = 6, fig.width = 9,warning=FALSE,message=FALSE}
+P1<- DS %>% 
+mutate(Diff_Time_Hours = round(difftime
+(DS$Ending_Time,DS$Starting_Time)/3600,digits = 2))
+P1 <- P1 %>% 
+mutate(Problem_Index = P1$Diff_Time_Hours*P1$Effected_Lanes)
+P1$Diff_Time_Hours = as.numeric(P1$Diff_Time_Hours)
+P1$Problem_Index = as.numeric(P1$Problem_Index)
+```
+
+The outliers were detected with statistical methods. Records that were 3 standard deviations away from the mean is excluded from the data set. Approximately %99 confidence interval is created. Data is grouped by announcement type. Summarized and sorted according to the problem index. 
+
+*Date-related recording errors are filtered out from the subset because of the calculations.* 
+
+```{r,fig.height = 6, fig.width = 9,warning=FALSE,message=FALSE}
+P1_1 <- P1 %>% filter(Problem_Index >= 0) %>% 
+  filter(Problem_Index<= 3*sd(Problem_Index)+
+  mean(Problem_Index) )%>%
+  group_by(Announcement_Types) %>% 
+  summarise(Avg_Problem_Index = mean(Problem_Index),
+  Count_Announcement_Types= n(), 
+  Sum_Problem_Index=sum(Problem_Index))%>% 
+  filter(Avg_Problem_Index > 0) 
+P1_1 <- data.frame(P1_1)
+P1_1<- P1_1[order(P1_1$Avg_Problem_Index,decreasing = TRUE), ]
+P1_1
+```
+
+It is shown that infrastructural or road constructional incidences were the worst traffic makers on average. However, car accidents and maintenance works occurred more frequently.Therefore, when it was summed up, these were the main traffic generators in total. 
+
+The distribution of the announcement types regarding to the average problem index, are shown on the pie chart.
+
+```{r,fig.height = 6, fig.width = 9,warning=FALSE,message=FALSE}
+ggplot(P1_1,aes(x="", y=Avg_Problem_Index, fill=Announcement_Types)) +
+geom_bar(stat='identity',width = 1)+
+coord_polar("y")+
+labs(title =
+"The distribution of the Announcement Types regarding to the Avg Problem Index")
+```
+
+In order to identify top 5 locations regarding problem index, the calculations are done. 
+
+*Date-related recording errors are filtered out from the subset because of the calculations.* 
+
+```{r,fig.height = 6, fig.width = 9,warning=FALSE,message=FALSE}
+P1_2 <- P1 %>% filter(Problem_Index >= 0) %>% select(Location,Problem_Index,Coordinates)
+P1_2 <- data.frame(P1_2)
+P1_2 <- P1_2[order(P1_2$Problem_Index,decreasing = TRUE), ]
+P1_2 <- head(P1_2,5)
+P1_2 <- data.frame(P1_2,do.call(rbind,strsplit(P1_2$Coordinates,",")))
+P1_2$X2=as.double(P1_2$X2)
+P1_2$X1=as.double(P1_2$X1)
+P1_2  %>% select(Location,Problem_Index)
+```
+
+These 5 locations are shown on the map.
+
+
+```{r,warning=FALSE,message=FALSE}
+leaflet(P1_2) %>% 
+  setView(lng = 28.70, lat = 41, zoom = 9.1)  %>% 
+  addTiles() %>% 
+  addCircles(data = P1_2, lat = ~ X1, 
+  lng = ~ X2, weight = 1, 
+  radius = ~sqrt(Problem_Index)*5,
+  popup = ~as.character(Location), 
+  color = "#d3501d", fillOpacity = 20)
+```
+
+### SET-2
+
+In the sub-study below, it is examined whether there is a relationship between the municipality elections and the number of running projects/constructions etc.
+
+*Since the November of 2020 is not completed yet, is not included in the study and date-related recording errors are kept on the subset. *
+
+```{r,fig.height = 6, fig.width = 9,warning=FALSE,message=FALSE}
+P2 = DS %>% 
+filter(Announcement_Types %in% c('Landscaping',
+'Maintenance','Infrastructure Work',
+'Construction Work-Structure',
+'Construction Work-Road')
+& Effected_Lanes >= 0)
+P2_1 = P2 %>% 
+group_by(Year_Quarter= lubridate::quarter(Starting_Time, with_year = TRUE)) %>%
+summarise(n = n())
+P2_1$Year_Quarter = factor(P2_1$Year_Quarter)
+P2_1=P2_1 %>% filter(Year_Quarter != "2020.4")
+```
+
+The number of the running projects such as construction, landscaping are shown on the bar chart on a quarterly basis.
+
+```{r,fig.height = 6, fig.width = 9,warning=FALSE,message=FALSE}
+ggplot(P2_1, aes(x=Year_Quarter, y=n)) + 
+geom_bar(stat="identity", position="dodge",fill="#d3501d", colour="black")+ 
+theme_minimal()+ 
+labs(title = "The number of Running Projects on a Quarterly basis",
+subtitle ="From 2018 to 2020")
+```
+
+* The number of projects carried out in 2018 decreased except in the third quarter.
+
+* Considering that there will be an election in March 2019, the number of projects carried out compared to the last quarter of the previous year has increased, but it was considerably lower than the same quarter of the previous year.
+
+* After the election repetition decision, the existing administration reduced the number of projects it carried out and most probably allocated resources for the second tour of the election. 
+
+* In the second quarter of 2019, the number of projects carried out according to the same content of last year has almost halved. And it was one of the least studied quarters of the 3-year period.
+
+* With the the new administration and the elimination of election uncertainty, the number of projects carried out by the municipality has started to increase regularly since the last quarter of 2019.
+
+* Although, the number of projects carried out in 2020 is above the projects carried out in 2019 – on a quarterly basis -, is below the 2018 values. The reason for this may be pandemic and economic problems. 
+
+### SET-3
+
+As a third section, it is investigated whether there is an effect of the pandemic on the number of Accidents.
+
+*Since the November of 2020 is not completed yet, is not included in the study and date-related recording errors are kept on the subset. *
+
+```{r,fig.height = 6, fig.width = 9,warning=FALSE,message=FALSE}
+P3=setDT(DS)[, Year_Month := format(as.Date(`Starting_Time`), "%Y-%m") ]
+P3= P3 %>% mutate(Year=year(Starting_Time),Day=day(Starting_Time))
+
+P3_1 = P3 %>% 
+filter(Announcement_Types == "Accident Notification" & 
+Effected_Lanes >= 0 & Year_Month != "2020-11") %>% 
+group_by(Year_Month,Year) %>% summarise(n = n())
+P3_1$Year=as.factor(P3_1$Year)
+```
+
+The number of Accidents are shown on the bar chart on a year-month basis. The bar chart has been colored on an annual basis for a clear view.
+
+```{r,fig.height = 6, fig.width = 9,warning=FALSE,message=FALSE}
+ggplot(P3_1,aes(x=Year_Month,y = n)) + 
+geom_bar(stat="identity",aes(fill=Year))+
+theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
+labs(title = "The number of Accidents on a Year-Month basis",
+subtitle ="From 2018 to 2020")
+```
+
+* There is a clear effect of the pandemic that can be seen in 2020. The first pandemic case occurred in March in Turkey. In April and May, there were a lot of lockdowns were applied. The number of Accidents significantly decreased in that period. After rule bendings and starting of the summer period, the numbers increased again.
+
+* Besides, there is a peak on 2018-07 that is seen on the chart. To investigate in more detail, the daily number of the Accidents in 2018-07 is plotted.
+
+```{r,fig.height = 6, fig.width = 9,warning=FALSE,message=FALSE}
+P3_2 = P3 %>% 
+filter(Announcement_Types == "Accident Notification" 
+& Effected_Lanes >= 0 & Year_Month == "2018-07") %>% 
+group_by(Day) %>% 
+summarise(n = n())
+P3_2$Day=as.factor(P3_2$Day)
+ggplot(P3_2,aes(x=Day,y = n)) +
+geom_bar(stat="identity",fill="#FFC300", colour="black")+
+theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
+geom_hline(yintercept=45, color="red")+
+labs(title = "The number of Accidents on a Daily basis",subtitle = "July,2018")
+```
+
+* 13th and 16th of July had the highest number of Accidents. 15'th of July is a national holiday in Turkey. 15'th of July was Sunday so the increase of these days could be because of that people tend to combine holidays and travel more before and after national holidays. 
+
+
+### SET-4
+
+In the final section, official holiday events are introduced to the data set in order to define holiday periods in the data. For instance, 'New Year', 'Labor Day', 'Ramadan', 'National Sovereignty and Children's Day' and 'May 19 Commemoration of Atatürk and Youth and Sports Day'. In the data set, weeks that are includes any of the holiday event are taken into consideration.
+
+Announcements that are reported during the holiday week are counted. Then, total number of announcements are shown on the pie chart in order to interpret the most common
+announcement reasons in the holiday term.
+
+The external data source is added  for holiday events.
+
+*Date-related recording errors are kept on the subset.*
+
+```{r,fig.height = 6, fig.width = 9,warning=FALSE,message=FALSE}
+holidayCalendar <- read_excel("CalendarEvents.xlsx")
+P4 <- DS %>%
+mutate(weekStarting_Time = lubridate::week(DS$Starting_Time), yearDS =
+lubridate::year(DS$Starting_Time))
+P4_1 <- mutate(P4, holidayWeek =
+(P4$weekStarting_Time==holidayCalendar$WeekHolidayStartDate &
+P4$yearDS==holidayCalendar$Year |
+P4$weekStarting_Time==holidayCalendar$WeekHolidayEndDate &
+P4$yearDS==holidayCalendar$Year)) %>%
+filter(Effected_Lanes >= 0 & holidayWeek==TRUE) %>%
+group_by(Announcement_Types) %>% count(Announcement_Types)
+```
+
+The distribution of Announcement Types during holiday weeks are shown in the below pie
+chart.
+
+```{r,fig.height = 6, fig.width = 9,warning=FALSE,message=FALSE}
+ggplot(P4_1,aes(x="", y=n, fill=Announcement_Types)) +geom_bar(stat='identity',width =1)+
+coord_polar("y")+scale_fill_hue(l=85)+
+labs(title = "The distribution of Announcement Types during Holiday Weeks")
+```
+
+* In the holiday periods, majority of traffic announcements are occurred by the accident
+notification records. Presumably, increased intercity travels are caused to accidents during holiday week.
+
+* Similarly, vehicle breakdown is affected by heavy travel demand and has got the second
+highest percentage among announcement types.
+
+* Remarkable results belong to the number of Maintenance. Municipality may prefer to complete road works when the city is relatively empty because traffic on the road will be less than the regular term. Under this circumstances, working on road maintenance will be more productive.
+
+## References
+
+- [Data Source - İBB Open Data Portal](https://data.ibb.gov.tr/dataset/ulasim-yonetim-merkezi-uym-tarafindan-sisteme-girilen-trafik-duyurulari)
+
+- [External Data Source - Holiday Events](https://www.tatilsepeti.com/resmi-tatil-gunleri)
+
+- [Mapping Link](https://medium.com/@joyplumeri/how-to-make-interactive-maps-in-r-shiny-brief-tutorial-c2e1ef0447da)
+
+*You may click* [here](https://pjournal.github.io/mef04g-a-k-a-r/) *to reach other items of A.K.A - R Group’s Progress Journal.* 
