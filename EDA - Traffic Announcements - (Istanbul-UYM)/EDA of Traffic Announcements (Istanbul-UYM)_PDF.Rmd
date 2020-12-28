@@ -37,7 +37,7 @@ h4{
 
 This dataset contains set of traffic announcements entered into the system by the Transport Management Center operators from 2018 to 2020. There are 12 variables and 58422 observations.
 
-[Project Proposal Link](https://pjournal.github.io/mef04g-a-k-a-r/Project-Proposal.html)
+[Project Proposal Link](https://pjournal.github.io/mef04g-a-k-a-r/Proposal%20-%20Traffic%20Announcements%20-%20(Istanbul-UYM)/Project-Proposal.html)
 
 ## Preprocessing
 
