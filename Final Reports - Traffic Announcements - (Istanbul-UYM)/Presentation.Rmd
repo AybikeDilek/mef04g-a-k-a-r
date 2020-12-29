@@ -87,10 +87,10 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Preprocessing
 
 - This dataset contains set of traffic announcements entered into the system by the Transport Management Center operators from **2018** to **2020** which are stored in **2** different datasets.  
-- There are **12** variables, with using Rbind **58,422** observations is obtained.
-- We converted Turkish variables and record names into English words.
-- We transformed **Announcement Types** and **Accident Types** variables into factorized variables.
-- We filtered out some observations, where we did some calculations, in the 2020 dataset because of the change in date and time structure but kept them in time series operations where we just used count operation.
+- There are **12** variables, with using Rbind **58,422** observations are obtained.
+- We converted Turkish variables and some records into English.
+- We transformed **Announcement Type** and **Accident Type** variables into factorized variables.
+- We filtered out some 2020 observations, where we calculated the problem index, because of the change in date and time structure but kept them in count operations.
 
 
 
@@ -211,8 +211,8 @@ ggplot(P2_1, aes(x=Year_Quarter, y=n)) + geom_bar(stat="identity", position="dod
 
 ```
 
-- <font size="3">The first round of the election in March 2019</font>
-- <font size="3">The second round of the election in June 2019</font>
+- <font size="3">The first round of the election: March 2019</font>
+- <font size="3">The second round of the election: June 2019</font>
 - <font size="3">Filtered announcement types are; Landscaping, Maintenance, Infrastructure Work, Construction Work-Structure, Construction Work-Road.</font>
 
 
@@ -231,7 +231,7 @@ ggplot(P3_1,aes(x=Year_Month,y = n)) + geom_bar(stat="identity",aes(fill=Year))+
 ```
 
 
-- <font size="4">The first pandemic case occurred in March in Turkey.</font> 
+- <font size="4">The first pandemic case occurred in March.</font> 
 
 - <font size="4">In April and May, there were a lot of lockdowns were applied.</font> 
 
@@ -280,7 +280,7 @@ filter(Effected_Lanes >= 0 & holidayWeek==TRUE) %>%
 group_by(Announcement_Types) %>% count(Announcement_Types)
 
 ggplot(P4_1,aes(x="", y=n, fill=Announcement_Types)) +geom_bar(stat='identity',width =
-1)+coord_polar("y")+scale_fill_hue(l=85)+labs(title = "The Distribution of Announcement Types During Holiday Weeks")
+1)+coord_polar("y")+scale_fill_hue(l=85)+labs(title = "The Distribution of Announcement Types During Holidays")
 ```
 
 </div>
@@ -292,9 +292,9 @@ ggplot(P4_1,aes(x="", y=n, fill=Announcement_Types)) +geom_bar(stat='identity',w
 
 - <font size="4">According to our problem index, infrastructure work & construction work-road were the worst traffic makers.</font>
 
-- <font size="4">Maintenance & Accident Notification occurred more frequently, with this aspect,  these were the worst for traffic.</font>
+- <font size="4">Maintenance & Accident Notification occurred more frequently, with this aspect,  these were the worst for the traffic.</font>
 
-- <font size="4">Considering that there will be an election in March 2019, the number of projects carried out compared to the last quarter of the previous year has increased.</font>
+- <font size="4">Considering that there was an election in March 2019, the number of projects carried out compared to the last quarter of the previous year has increased.</font>
 
 - <font size="4">With the new administration and the elimination of election uncertainty, the number of projects carried out by the municipality has started to increase regularly from the last quarter of 2019.</font>
 
@@ -302,7 +302,7 @@ ggplot(P4_1,aes(x="", y=n, fill=Announcement_Types)) +geom_bar(stat='identity',w
 
 - <font size="4">After rule bendings, the number of accidents increased to the standard levels.</font>
 
-- <font size="4">During holiday times, accident notifications & vehicle breakdown notifications composed about 80% of total notifications.</font>
+- <font size="4">During holidays, accident & vehicle breakdown notifications composed about 80% of the total notifications.</font>
 
 <font size="6">References</font>
 -----------------------------------------------------------------------
